@@ -7,7 +7,8 @@ import 'package:todo/models/todo_model.dart';
 import 'package:todo/widgets/title_bar.dart';
 
 class NewTodoScreen extends StatefulWidget {
-  NewTodoScreen({Key key}) : super(key: key);
+  final Function callback;
+  NewTodoScreen({Key key, this.callback}) : super(key: key);
 
   @override
   _NewTodoScreenState createState() => _NewTodoScreenState();
@@ -156,6 +157,8 @@ class _NewTodoScreenState extends State<NewTodoScreen> {
         msg: todoController.text,
       ).toJson()));
       await pref.setStringList("todo", todo);
+      widget.callback();
+      Navigator.of(context).pop();
     }
   }
 }

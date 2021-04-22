@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo/helper/routing.dart';
+import 'package:todo/models/todo_model.dart';
 import 'package:todo/screens/new_todo.dart';
 import 'package:todo/widgets/title_bar.dart';
 
@@ -11,6 +15,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<Todo> todos = [];
+  @override
+  void initState() {
+    super.initState();
+    getTodo();
+  }
+
+  getTodo() async {
+    final pref = await SharedPreferences.getInstance();
+    todos.clear();
+    setState(() {
+      pref.getStringList("todo").forEach((element) {
+        todos.add(Todo.fromJson(jsonDecode(element)));
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,14 +64,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     titleBar(
                       nameAction: "new",
                       action: () {
-                        routeTo(context: context, screen: NewTodoScreen());
+                        routeTo(
+                          context: context,
+                          screen: NewTodoScreen(callback: () {
+                            getTodo();
+                          }),
+                        );
                       },
                     ),
                     Container(
                       child: ListView.builder(
                         padding: EdgeInsets.zero,
                         shrinkWrap: true,
-                        itemCount: 2,
+                        itemCount: todos.length,
                         itemBuilder: (context, index) {
                           return ListTile(
                             leading: Icon(
@@ -59,12 +85,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: Colors.green,
                             ),
                             title: Text(
-                              "สวัสดีตอนเช้าสวัสดีตอนเช้าสวัสดีตอนเช้า",
+                              todos[index].topic,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                             subtitle: Text(
-                              "อ่านหนังสือ",
+                              todos[index].msg,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
