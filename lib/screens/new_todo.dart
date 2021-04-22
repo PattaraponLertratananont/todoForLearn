@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo/models/todo_model.dart';
 import 'package:todo/widgets/title_bar.dart';
 
 class NewTodoScreen extends StatefulWidget {
@@ -10,6 +14,11 @@ class NewTodoScreen extends StatefulWidget {
 }
 
 class _NewTodoScreenState extends State<NewTodoScreen> {
+  TextEditingController topicController = TextEditingController();
+  TextEditingController todoController = TextEditingController();
+  FocusNode topicFocusCode = FocusNode();
+  FocusNode todoFocusCode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,16 +56,20 @@ class _NewTodoScreenState extends State<NewTodoScreen> {
                       children: [
                         titleBar(
                           nameAction: "save",
-                          action: () {},
+                          action: () async {
+                            await saveTodo();
+                          },
                         ),
                         Container(
                           padding: EdgeInsets.only(top: 16, bottom: 16),
                           child: TextField(
+                            controller: topicController,
+                            focusNode: topicFocusCode,
                             cursorColor: Colors.grey[800],
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
                                 horizontal: 16,
-                                vertical: 8,
+                                vertical: 16,
                               ),
                               labelText: "Topic",
                               labelStyle: TextStyle(color: Colors.grey[600]),
@@ -73,17 +86,20 @@ class _NewTodoScreenState extends State<NewTodoScreen> {
                                 ),
                               ),
                             ),
+                            textInputAction: TextInputAction.next,
                           ),
                         ),
                         Container(
                           padding: EdgeInsets.only(top: 16, bottom: 16),
                           child: TextField(
+                            controller: todoController,
+                            focusNode: todoFocusCode,
                             cursorColor: Colors.grey[800],
                             maxLines: 8,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
                                 horizontal: 16,
-                                vertical: 8,
+                                vertical: 16,
                               ),
                               labelText: "Todo...",
                               alignLabelWithHint: true,
@@ -129,5 +145,17 @@ class _NewTodoScreenState extends State<NewTodoScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> saveTodo() async {
+    final pref = await SharedPreferences.getInstance();
+    final todo = pref.getStringList("todo") ?? [];
+    if (topicController.text.isNotEmpty && todoController.text.isNotEmpty) {
+      todo.add(jsonEncode(Todo(
+        topic: topicController.text,
+        msg: todoController.text,
+      ).toJson()));
+      await pref.setStringList("todo", todo);
+    }
   }
 }
