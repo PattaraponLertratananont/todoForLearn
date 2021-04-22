@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:todo/helper/routing.dart';
 import 'package:todo/screens/new_todo.dart';
+import 'package:todo/widgets/title_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -38,7 +40,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: Column(
                   children: [
-                    titleBar(),
+                    titleBar(
+                      nameAction: "new",
+                      action: () {
+                        routeTo(context: context, screen: NewTodoScreen());
+                      },
+                    ),
                     Container(
                       child: ListView.builder(
                         padding: EdgeInsets.zero,
@@ -79,37 +86,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-  }
-
-  Widget titleBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          "TODO",
-          style: TextStyle(fontSize: 20),
-        ),
-        TextButton(
-          onPressed: () {
-            routeTo(NewTodoScreen());
-          },
-          child: Text(
-            "new",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 16,
-              decoration: TextDecoration.underline,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  void routeTo(Widget screen) {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => screen,
-    ));
   }
 }
