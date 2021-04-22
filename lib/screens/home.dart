@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo/screens/new_todo.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -46,11 +47,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemBuilder: (context, index) {
                           return ListTile(
                             leading: Icon(
-                              Icons.check_circle_outline,
+                              Icons.check_circle_outline_rounded,
+                              size: 30,
                               color: Colors.green,
                             ),
-                            title: Text("สวัสดีตอนเช้า"),
-                            subtitle: Text("อ่านหนังสือ"),
+                            title: Text(
+                              "สวัสดีตอนเช้าสวัสดีตอนเช้าสวัสดีตอนเช้า",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            subtitle: Text(
+                              "อ่านหนังสือ",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                             trailing: IconButton(
                               padding: EdgeInsets.zero,
                               icon: Icon(Icons.more_vert),
@@ -81,7 +91,9 @@ class _HomeScreenState extends State<HomeScreen> {
           style: TextStyle(fontSize: 20),
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            routeTo(NewTodoScreen());
+          },
           child: Text(
             "new",
             style: TextStyle(
@@ -93,5 +105,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ],
     );
+  }
+
+  void routeTo(Widget screen) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => screen,
+    ));
   }
 }
