@@ -160,10 +160,13 @@ class _NewTodoScreenState extends State<NewTodoScreen> {
     Future Function()? routeTo,
   }) async {
     if (topic!.isNotEmpty && todo!.isNotEmpty) {
-      MockTodo.addTodo(Todo(
-        topic: topic,
-        msg: todo,
-      ));
+      MockTodo.addTodo(
+        Todo(
+          topic: topic,
+          msg: todo,
+          complete: false,
+        ),
+      );
       await routeTo!();
     }
   }

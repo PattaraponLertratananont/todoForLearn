@@ -80,9 +80,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               itemBuilder: (context, index) {
                                 return ListTile(
                                   leading: Icon(
-                                    Icons.check_circle_outline_rounded,
+                                    todos[index].complete
+                                        ? Icons.check_circle_outline_rounded
+                                        : Icons.panorama_fish_eye,
                                     size: 30,
-                                    color: Colors.green,
+                                    color: todos[index].complete
+                                        ? Colors.green
+                                        : Colors.yellow[600],
                                   ),
                                   title: Text(
                                     todos[index].topic,
@@ -103,7 +107,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     icon: Icon(Icons.more_vert),
                                     onPressed: () {},
                                   ),
-                                  onTap: () {},
+                                  onTap: () async {
+                                    await MockTodo.completeTodo(index);
+                                    await getTodo();
+                                  },
                                 );
                               },
                             ),
