@@ -1,7 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:todo/mock_todo.dart';
 import 'package:todo/models/todo_model.dart';
 import 'package:todo/widgets/title_bar.dart';
 
@@ -56,7 +55,17 @@ class _NewTodoScreenState extends State<NewTodoScreen> {
                       children: [
                         titleBar(
                           nameAction: "save",
-                          action: () async {},
+                          action: () async {
+                            if (topicController.text.isNotEmpty &&
+                                todoController.text.isNotEmpty) {
+                              MockTodo.addTodo(Todo(
+                                topic: topicController.text,
+                                msg: todoController.text,
+                              ));
+                              await widget.callback!();
+                              Navigator.of(context).pop();
+                            }
+                          },
                         ),
                         Container(
                           padding: EdgeInsets.only(top: 16, bottom: 16),

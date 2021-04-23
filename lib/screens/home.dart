@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo/mock_todo.dart';
 import 'package:todo/models/todo_model.dart';
 import 'package:todo/screens/new_todo.dart';
 import 'package:todo/widgets/title_bar.dart';
@@ -19,8 +20,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> getTodo() async {
-    todos.clear();
-    setState(() {});
+    final result = await MockTodo.getTodo();
+    setState(() {
+      todos = result;
+    });
   }
 
   @override
@@ -65,36 +68,45 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                     Container(
-                      child: ListView.builder(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        itemCount: todos.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            leading: Icon(
-                              Icons.check_circle_outline_rounded,
-                              size: 30,
-                              color: Colors.green,
-                            ),
-                            title: Text(
-                              todos[index].topic,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            subtitle: Text(
-                              todos[index].msg,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            trailing: IconButton(
+                      child: todos.isEmpty
+                          ? Container(
+                              padding: EdgeInsets.only(top: 32),
+                              child: Text("Empty..."),
+                            )
+                          : ListView.builder(
                               padding: EdgeInsets.zero,
-                              icon: Icon(Icons.more_vert),
-                              onPressed: () {},
+                              shrinkWrap: true,
+                              itemCount: todos.length,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  leading: Icon(
+                                    Icons.check_circle_outline_rounded,
+                                    size: 30,
+                                    color: Colors.green,
+                                  ),
+                                  title: Text(
+                                    todos[index].topic,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    todos[index].msg,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  trailing: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    icon: Icon(Icons.more_vert),
+                                    onPressed: () {},
+                                  ),
+                                  onTap: () {},
+                                );
+                              },
                             ),
-                            onTap: () {},
-                          );
-                        },
-                      ),
                     ),
                   ],
                 ),
