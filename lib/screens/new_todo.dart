@@ -7,8 +7,8 @@ import 'package:todo/models/todo_model.dart';
 import 'package:todo/widgets/title_bar.dart';
 
 class NewTodoScreen extends StatefulWidget {
-  final Function callback;
-  NewTodoScreen({Key key, this.callback}) : super(key: key);
+  final Function? callback;
+  NewTodoScreen({Key? key, this.callback}) : super(key: key);
 
   @override
   _NewTodoScreenState createState() => _NewTodoScreenState();
@@ -77,13 +77,13 @@ class _NewTodoScreenState extends State<NewTodoScreen> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
                                 borderSide: BorderSide(
-                                  color: Colors.grey[600],
+                                  color: Colors.grey.shade600,
                                 ),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
                                 borderSide: BorderSide(
-                                  color: Colors.grey[600],
+                                  color: Colors.grey.shade600,
                                 ),
                               ),
                             ),
@@ -104,17 +104,18 @@ class _NewTodoScreenState extends State<NewTodoScreen> {
                               ),
                               labelText: "Todo...",
                               alignLabelWithHint: true,
-                              labelStyle: TextStyle(color: Colors.grey[600]),
+                              labelStyle:
+                                  TextStyle(color: Colors.grey.shade600),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
                                 borderSide: BorderSide(
-                                  color: Colors.grey[600],
+                                  color: Colors.grey.shade600,
                                 ),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
                                 borderSide: BorderSide(
-                                  color: Colors.grey[600],
+                                  color: Colors.grey.shade600,
                                 ),
                               ),
                             ),
@@ -157,7 +158,7 @@ class _NewTodoScreenState extends State<NewTodoScreen> {
         msg: todoController.text,
       ).toJson()));
       await pref.setStringList("todo", todo);
-      widget.callback();
+      widget.callback!();
       Navigator.of(context).pop();
     }
   }

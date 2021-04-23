@@ -8,7 +8,7 @@ import 'package:todo/screens/new_todo.dart';
 import 'package:todo/widgets/title_bar.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final pref = await SharedPreferences.getInstance();
     todos.clear();
     setState(() {
-      pref.getStringList("todo").forEach((element) {
+      pref.getStringList("todo")!.forEach((element) {
         todos.add(Todo.fromJson(jsonDecode(element)));
       });
     });

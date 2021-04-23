@@ -1,8 +1,8 @@
 class Todo {
-  String topic;
-  String msg;
+  late String topic;
+  late String msg;
 
-  Todo({this.topic, this.msg});
+  Todo({required this.topic, required this.msg});
 
   Todo.fromJson(Map<String, dynamic> json) {
     topic = json['topic'];
