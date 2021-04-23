@@ -13,5 +13,18 @@ void main() {
     "complete": false,
   };
 
+  Predicate<String> a = (value) {
+    print(value.runtimeType);
+  };
+  Predicate<int> b = (value) {
+    print(value.runtimeType);
+  };
+
+  a("Hello world");
+
+  b(23);
+
   print("$name $age $bmi $single $skills $todo");
 }
+
+typedef Predicate<T> = Function(T value);
