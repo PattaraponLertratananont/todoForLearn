@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 void routeTo({
   required BuildContext context,
-  required Widget screen,
+  required dynamic screen,
 }) {
   Navigator.of(context).push(MaterialPageRoute(
     builder: (context) => screen,

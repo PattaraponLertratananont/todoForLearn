@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget titleBar({Function? action, required String nameAction}) {
+Widget titleBar({dynamic action, required String nameAction}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     crossAxisAlignment: CrossAxisAlignment.center,
@@ -10,7 +10,7 @@ Widget titleBar({Function? action, required String nameAction}) {
         style: TextStyle(fontSize: 20),
       ),
       TextButton(
-        onPressed: action!() ?? () {},
+        onPressed: action,
         child: Text(
           nameAction,
           style: TextStyle(

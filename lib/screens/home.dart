@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo/helper/routing.dart';
 import 'package:todo/models/todo_model.dart';
 import 'package:todo/screens/new_todo.dart';
 import 'package:todo/widgets/title_bar.dart';
@@ -22,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
     getTodo();
   }
 
-  getTodo() async {
+  Future<void> getTodo() async {
     final pref = await SharedPreferences.getInstance();
     todos.clear();
     setState(() {
@@ -64,12 +63,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     titleBar(
                       nameAction: "new",
                       action: () {
-                        routeTo(
-                          context: context,
-                          screen: NewTodoScreen(callback: () {
-                            getTodo();
-                          }),
-                        );
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => NewTodoScreen(
+                            callback: () {
+                              getTodo();
+                            },
+                          ),
+                        ));
                       },
                     ),
                     Container(
