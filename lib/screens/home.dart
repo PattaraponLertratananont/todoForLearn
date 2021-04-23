@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo/models/todo_model.dart';
 import 'package:todo/screens/new_todo.dart';
 import 'package:todo/widgets/title_bar.dart';
@@ -22,13 +19,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> getTodo() async {
-    final pref = await SharedPreferences.getInstance();
     todos.clear();
-    setState(() {
-      pref.getStringList("todo")!.forEach((element) {
-        todos.add(Todo.fromJson(jsonDecode(element)));
-      });
-    });
+    setState(() {});
   }
 
   @override

@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo/models/todo_model.dart';
 import 'package:todo/widgets/title_bar.dart';
 
@@ -57,9 +56,7 @@ class _NewTodoScreenState extends State<NewTodoScreen> {
                       children: [
                         titleBar(
                           nameAction: "save",
-                          action: () async {
-                            await saveTodo();
-                          },
+                          action: () async {},
                         ),
                         Container(
                           padding: EdgeInsets.only(top: 16, bottom: 16),
@@ -147,19 +144,5 @@ class _NewTodoScreenState extends State<NewTodoScreen> {
         ),
       ),
     );
-  }
-
-  Future<void> saveTodo() async {
-    final pref = await SharedPreferences.getInstance();
-    final todo = pref.getStringList("todo") ?? [];
-    if (topicController.text.isNotEmpty && todoController.text.isNotEmpty) {
-      todo.add(jsonEncode(Todo(
-        topic: topicController.text,
-        msg: todoController.text,
-      ).toJson()));
-      await pref.setStringList("todo", todo);
-      widget.callback!();
-      Navigator.of(context).pop();
-    }
   }
 }
