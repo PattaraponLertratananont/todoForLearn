@@ -68,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                     Container(
+                      height: MediaQuery.of(context).size.height * 0.45,
                       child: todos.isEmpty
                           ? Container(
                               padding: EdgeInsets.only(top: 32),
@@ -76,6 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           : ListView.builder(
                               padding: EdgeInsets.zero,
                               shrinkWrap: true,
+                              physics: ClampingScrollPhysics(),
                               itemCount: todos.length,
                               itemBuilder: (context, index) {
                                 return ListTile(
