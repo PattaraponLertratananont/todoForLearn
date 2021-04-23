@@ -56,15 +56,14 @@ class _NewTodoScreenState extends State<NewTodoScreen> {
                         titleBar(
                           nameAction: "save",
                           action: () async {
-                            if (topicController.text.isNotEmpty &&
-                                todoController.text.isNotEmpty) {
-                              MockTodo.addTodo(Todo(
-                                topic: topicController.text,
-                                msg: todoController.text,
-                              ));
-                              await widget.callback!();
-                              Navigator.of(context).pop();
-                            }
+                            await addTodo(
+                              topic: topicController.text,
+                              todo: todoController.text,
+                              routeTo: () async {
+                                await widget.callback!();
+                                Navigator.of(context).pop();
+                              },
+                            );
                           },
                         ),
                         Container(
@@ -153,5 +152,19 @@ class _NewTodoScreenState extends State<NewTodoScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> addTodo({
+    String? topic,
+    String? todo,
+    Future Function()? routeTo,
+  }) async {
+    if (topic!.isNotEmpty && todo!.isNotEmpty) {
+      MockTodo.addTodo(Todo(
+        topic: topic,
+        msg: todo,
+      ));
+      await routeTo!();
+    }
   }
 }
