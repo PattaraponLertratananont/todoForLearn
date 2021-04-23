@@ -30,7 +30,7 @@ class MockTodo {
   }
 
   static Future<void> deleteTodo(int index) async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(Duration(milliseconds: 500));
     todos.removeAt(index);
   }
 }
