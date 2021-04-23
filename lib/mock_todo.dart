@@ -28,4 +28,9 @@ class MockTodo {
     await Future.delayed(Duration(milliseconds: 500));
     todos[index].complete = true;
   }
+
+  static Future<void> deleteTodo(int index) async {
+    await Future.delayed(Duration(seconds: 1));
+    todos.removeAt(index);
+  }
 }
